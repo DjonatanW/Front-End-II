@@ -221,3 +221,27 @@ a {
   cursor: not-allowed;
   opacity: 0.6;
 }
+
+.form-username {
+  font-size: 20px;
+  color: #212529;
+  margin: 0;
+  cursor: pointer;
+  align-items: center;
+}
+
+.form-password {
+  font-size: 20px;
+  color: #212529;
+  margin: 0;
+  cursor: pointer;
+  align-items: center;
+}
+
+#username,
+#password
+{
+  margin: 10px;
+  font-size: 20px;
+  border-radius: 8px;
+}
