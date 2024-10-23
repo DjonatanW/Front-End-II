@@ -11,7 +11,7 @@ console.log(noteId)
 
 async function populateEditForm() {
   try {
-    const response = await api.get(`/notes/details/${noteId}`)
+    const response = await api.get(`/messages/details/${noteId}`)
     const note = response.data
 
     title.value = note.title
@@ -26,7 +26,7 @@ populateEditForm()
 
 async function updateNote(note) {
   try {
-    const response = await api.put(`/notes/${noteId}`, note)
+    const response = await api.put(`/messages/${noteId}`, note)
 
     if (response.status === 200) {
       alert('Recado atualizado com sucesso!')

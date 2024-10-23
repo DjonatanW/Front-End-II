@@ -1,30 +1,61 @@
-document.getElementById('form-login').addEventListener('submit', ()  => {
+const formLogin = document.getElementById('form-login')
+const email = document.getElementById('email-login')
+const password = document.getElementById('password-login')
 
-  const username = document.getElementById('username').value
-  const password = document.getElementById('password').value
+function setError(input, message) {
+  const formControl = input.parentElement
+  const small = formControl.querySelector('small')
 
-  if (!username || !password) {
-      alert('Por favor, preencha todos os campos.')
-      return
-  }
+  small.textContent = message
+  formControl.classList.remove('success')
+  formControl.classList.remove('error')
+}
 
-  const loginData = {
-      username: username,
-      password: password
-  }
-  autenticationUser(loginData)
-})
+function setSuccess(input) {
+  const formControl = input.parentElement
 
-async function autenticationUser(user) {
+  formControl.classList.remove('error')
+  formControl.classList.remove('success')
+} 
+
+async function login(data) {
   try {
-    const response = await api.post('/signup', user)
+    const response = await api.post('/users/login', data)
 
-    if (response.status === 201) {
-      alert('Login realizado com sucesso!')
+    if (response.status === 200) {
+      const user = response.data.user
+      
+      localStorage.setItem('email', user.email)
 
       location.href = 'list-note.html'
     }
+
   } catch (error) {
-    console.error('Erro ao realizar o login', error)
+    console.error('Erro ao fazer o login', error)
   }
 }
+
+formLogin.addEventListener('submit', (event) => {  
+  event.preventDefault()
+
+  const data = {
+    email: email.value,
+    password: password.value
+  }
+
+  if (!email.value) {
+    setError(email, 'E-mail é obrigatório')
+  } else {
+    setSuccess(email)
+  }
+
+  if (!password.value) {
+    setError(password, 'Senha é obrigatório')
+  } else {
+    setSuccess(password)
+  }
+
+  if (data.email && data.password) {
+    login(data)
+  }
+})

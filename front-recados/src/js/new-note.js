@@ -4,7 +4,7 @@ const description = document.getElementById('description')
 
 async function createNewNote(note) {
   try {
-    const response = await api.post('/messages', note)
+    const response = await api.post('/messages/message', note)
 
     if (response.status === 201) {
       alert('Recado cadastrado com sucesso!')
@@ -22,12 +22,12 @@ async function createNewNote(note) {
 formNewNote.addEventListener('submit', (event) => {
   event.preventDefault()
 
-  const userId = '0a0b3462-e3f8-4250-9064-ce3879d0236e'
+  const email = localStorage.getItem('email')
 
   const newNote = {
     title: title.value,
     description: description.value,
-    userId
+    email
   }
 
   createNewNote(newNote)

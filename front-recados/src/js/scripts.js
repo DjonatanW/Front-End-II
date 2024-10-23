@@ -3,9 +3,9 @@ const notesContainer = document.getElementById('notes-list')
 async function fetchNotes() {
   try {
     notesContainer.innerHTML = ''
-    const userId = 'djonatan11021996@gmail.com'
+    const email = localStorage.getItem('email')
 
-    const response = await api.get(`/messages/${userId}`)
+    const response = await api.get(`/messages/${email}`)
     const notes = response.data.messagesFilter
 
     notes.forEach((note) => {
