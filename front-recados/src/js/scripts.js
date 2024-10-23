@@ -1,12 +1,25 @@
 const notesContainer = document.getElementById('notes-list')
 
-async function fetchNotes() {
+const prevPage = document.getElementById('prev-page')
+const nextPage = document.getElementById('next-page')
+
+let currentPage = 1
+let totalPages = 1
+
+async function fetchNotes(page) {
   try {
     notesContainer.innerHTML = ''
     const email = localStorage.getItem('email')
 
-    const response = await api.get(`/messages/${email}`)
-    const notes = response.data.messagesFilter
+    const params = {
+      page,
+      perPage: 3
+    }
+
+    const response = await api.get(`/messages/get/${email}`, { params })
+    const notes = response.data.message
+
+    totalPages = response.data.totalPages
 
     notes.forEach((note) => {
       const noteCard = document.createElement('div')
@@ -41,6 +54,9 @@ async function fetchNotes() {
       if (notes.length === 0) {
         console.log('Nenhum recado para mostar')
       }
+      
+      updatePaginationButtons()
+
     })
   } catch (error) {
     console.error('Erro ao buscar recados.', error)
@@ -51,4 +67,26 @@ function navigateToEditPage(noteId) {
   location.href = `edit-note.html?id=${noteId}`
 }
 
-fetchNotes()
+fetchNotes(currentPage)
+
+prevPage.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--
+
+    fetchNotes(currentPage)
+  }
+
+})
+
+nextPage.addEventListener('click', () => {
+  if (currentPage < totalPages) {
+    currentPage++
+
+    fetchNotes(currentPage)
+  }
+})
+
+function updatePaginationButtons() {
+  prevPage.disabled = currentPage === 1 
+  nextPage.disabled = currentPage === totalPages
+}
