@@ -21,7 +21,7 @@ function setSuccess(input) {
 async function login(data) {
   try {
     const response = await api.post('/users/login', data)
-
+    
     if (response.status === 200) {
       const user = response.data.user
       
@@ -31,7 +31,11 @@ async function login(data) {
     }
 
   } catch (error) {
-    console.error('Erro ao fazer o login', error)
+    if (error.response && error.response.status === 400) {
+      console.error('Erro 400: Requisição inválida:', error.response.data.message)
+    } else {
+      console.error('Erro ao fazer o login', error)
+    }
   }
 }
 

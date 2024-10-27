@@ -32,12 +32,12 @@ a {
 
 .header {
   width: 100%;
-  margin: 3rem 0;
+  margin: 1.5rem 0;
   text-align: center;
 }
 
 .header .logo {
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
 }
 
 .header .title {
@@ -220,4 +220,25 @@ a {
   background-color: #d3d3d3;
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+
+.btn-logout {
+  height: 3.5rem;
+  width: 20%;
+  padding: 0px 1.5rem;
+  border-radius: 16px;
+  background: #ad0909;
+  margin-top: 1.5rem;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+
+  transition: ease 0.2s;
+}
+
+.btn-logout:hover {
+  background: #f14200;
 }

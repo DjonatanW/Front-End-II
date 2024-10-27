@@ -1,5 +1,4 @@
 const notesContainer = document.getElementById('notes-list')
-
 const prevPage = document.getElementById('prev-page')
 const nextPage = document.getElementById('next-page')
 
@@ -10,6 +9,12 @@ async function fetchNotes(page) {
   try {
     notesContainer.innerHTML = ''
     const email = localStorage.getItem('email')
+
+    if (!email) {
+      alert('Você precisa fazer login para visualizar os recados.')
+       location.href = 'login.html'
+      return
+    }
 
     const params = {
       page,
@@ -90,3 +95,16 @@ function updatePaginationButtons() {
   prevPage.disabled = currentPage === 1 
   nextPage.disabled = currentPage === totalPages
 }
+
+
+const newNoteButton = document.getElementById('btn-new-note')
+
+newNoteButton.addEventListener('click', (event) => {  
+  event.preventDefault()
+  location.href = 'new-note.html'
+})
+
+document.getElementById('btn-logout').addEventListener('click', () => {
+  localStorage.removeItem('email')
+  location.href = 'login.html'
+})
